@@ -1,3 +1,9 @@
+//Variables
+
+
+
+
+
 //querySelector
 
 let heading = document.querySelector(".header__texto h2") //Retorna 0 o 1 elementos
@@ -47,27 +53,80 @@ window.onscroll = function(){
 
 //Seleccionar elementos y asociarlos a un evento
 
-const boton = document.querySelector('.boton--primario')
-console.log(boton);
-boton.addEventListener('click', (evento) => {
-    evento.preventDefault();
-     console.log('enviando a formulario')})
-
-
+// const boton = document.querySelector('.boton--primario')
+// boton.addEventListener('click', (evento) => {
+     
+//      evento.preventDefault();
+//      console.log('enviando a formulario')
+//     })
 
 //Eventos de los input y textarea
+const datos = {
+    nombre: '',
+    email: '',
+    mensaje: ''
+}
 
 const nombre = document.querySelector('#nombre');
 const email = document.querySelector('#email');
 const mensaje = document.querySelector('#mensaje');
-console.log(nombre, email, mensaje);
 
-nombre.addEventListener('input', eve());
-email.addEventListener('input', (e) => console.log(e.target.value));
-mensaje.addEventListener('input', (e) => console.log(e.target.value));
+nombre.addEventListener('input', eve);
+email.addEventListener('input', eve);
+mensaje.addEventListener('input', eve);
 
 function eve(e){
-    console.log(e.target.value)
+    datos[e.target.id] = e.target.value;
+    console.log(datos);
 }
 
+//Evento de submit en formularios
 
+const formulario = document.querySelector('.formulario')
+formulario.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    //Validar el formulario
+
+    const {nombre, email, mensaje} = datos;
+    console.log(nombre);
+    console.log(email);
+    console.log(mensaje);
+
+    if(nombre === '' || email === '' || mensaje === ''){
+        mostrarAlerta('Todos los cambios son obligatorios', 'error');
+
+        return;
+    }
+
+    mostrarAlerta('Se ha registrado exitosamente', 'correcto');
+    //Enviar el formulario
+
+
+})
+
+function mostrarAlerta (mensaje, color){
+    let alerta = document.createElement('P');
+    alerta.textContent = mensaje;
+    alerta.classList.add(`${color}`);
+    console.log(alerta);
+    formulario.appendChild(alerta);
+
+    
+    //Enviado correctamente
+    //Desaparesca despues de 5 segundo
+    setTimeout(() => {
+        alerta.remove();
+    }, 5000);
+}
+
+// function mostrarExito(mensaje){
+//     let exito = document.createElement('p');
+//     exito.textContent = mensaje;
+//     exito.classList.add('error')
+//     formulario.appendChild(exito);
+
+//     setTimeout(() => {
+//         exito.remove();
+//     }, 5000);
+// }
